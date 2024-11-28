@@ -1,0 +1,25 @@
+import pandas as pd
+
+inv = pd.read_csv("employees.csv")
+
+gross_sal = []
+net_sal = []
+
+row_count = sum(1 for row in inv.values)
+
+print(inv)
+
+for row in inv.values:
+    gross = row[2] + row[3]
+    net = gross - row[4]
+    gross_sal.append(gross)
+    net_sal.append(net)
+
+inv['gross_sal'] = gross_sal
+inv['net_sal'] = net_sal
+
+inv.sort_values(['gross_sal', 'net_sal'], axis=0, ascending=[True, True], inplace=True, kind='mergesort')
+
+inv.to_csv("employees_updated.csv", index=False)
+
+print(inv)
